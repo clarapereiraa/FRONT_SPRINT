@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../img/logo.png";
+import logo from "../assets/logo.png";
+import iconehome from "../assets/iconehome.png";
 import api from "../services/axios";
 
 function Cadastro() {
@@ -48,7 +49,7 @@ function Cadastro() {
       <Box sx={styles.header}>
         <Button component={Link} to="/home" sx={styles.buttonHome}>
           <img
-            src={home}
+            src={iconehome}
             alt="Home"
             style={{ width: "65px", height: "65px" }}
           />
@@ -64,7 +65,7 @@ function Cadastro() {
             height: "auto",
             mb: 4,
             border: 5,
-            borderColor: "white",
+            borderColor: "#ff0000",
             borderRadius: 4,
           }}
         />

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../img/logo.png";
-
+import logo from "../assets/logo.png";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -10,128 +9,75 @@ function Home() {
   const styles = getStyles();
 
   return (
-    <div style={{ backgroundColor: "fefefe"}}>
-
-<Box sx={styles.header}>
-        <img src={logo} alt="Logo" style={styles.logo} />
-        <Button
-          component={Link}
-          to="/cadastro"
-          sx={styles.buttonToCadastro}
-          variant="text"
-        >
-          Cadastre-se
-        </Button>
-        <Button
-          component={Link}
-          to="/login"
-          sx={styles.buttonToLogin}
-          variant="text"
-        >
-          Login
-        </Button>
+    <Box sx={styles.container}>
+      <Box sx={styles.header}>
+        <img src={logo} alt="SENAI" style={styles.logo} />
       </Box>
-
-    <Container sx={styles.container}>
-      
-      <Box sx={styles.body}>
-        <Typography sx={styles.bodyText}>
-          Seja Bem-vindo ao site de Reservas do SENAI
+      <Container sx={styles.body}>
+        <Typography sx={styles.title}>
+          Bem vindo ao Agendamento Senai
         </Typography>
-      </Box>
-      
-    </Container>
-
-    <Box sx={styles.footer}>
-        <Typography sx={styles.footerText}>
-          &copy; Desenvolvido por: Clara Pereira, Maria Clara Mendes e Yasmin Souza
-        </Typography>
-      </Box>
-
-    </div>
+        <Button component={Link} to="/cadastro" sx={styles.button}>
+          Faça o cadastro
+        </Button>
+        <Button component={Link} to="/login" sx={styles.button}>
+          Faça login
+        </Button>
+      </Container>
+    </Box>
   );
 }
 
 function getStyles() {
   return {
-    header: {
-      backgroundColor: "rgba(177, 16, 16, 1)",
-      width: "210vh",
-      length:"100%",
-      height: "11vh",
+    container: {
+      backgroundColor: "#ff0000",
+      height: "100vh",
+      width: "100%",
       display: "flex",
+      flexDirection: "column",
       alignItems: "center",
-      justifyContent: "end",
-      borderBottom: "5px solid white",
+      justifyContent: "center",
     },
-    logo: {
-      width: "230px",
-      height: "auto",
-      marginRight: "1370px",
-      border: "4px solid white",
-      borderRadius: 15,
-    },
-    buttonToCadastro: {
-      "&.MuiButton-root": {
-        border: "none",
-        boxShadow: "none",
-        "&:hover": {
-          border: "none",
-          backgroundColor: "rgba(255, 0, 0, 0.55)",
-        },
-      },
-      color: "white",
-      backgroundColor: "rgba(255, 0, 0, 1)",
-      width: 130,
-      height: 45,
-      fontWeight: 600,
-      fontSize: 15,
-      borderRadius: 15,
-      textTransform: "none",
-    },
-    buttonToLogin: {
-      "&.MuiButton-root": {
-        border: "none",
-        boxShadow: "none",
-        "&:hover": {
-          border: "none",
-          backgroundColor: "rgba(255, 0, 0, 0.55)",
-        },
-      },
-      mr: 8,
-      ml: 3,
-      color: "white",
-      backgroundColor: "rgba(255, 0, 0, 1)",
-      width: 80,
-      height: 45,
-      fontWeight: 600,
-      fontSize: 15,
-      borderRadius: 15,
-      textTransform: "none",
-    },
-    body: {
-      mt: 8,
-      mr: 110,
-      width: "70vh",
-      height: "74.2vh",
-    },
-    bodyText: {
-      color: "white",
-      fontSize: 100,
-      fontWeight: 760,
-    },
-    footer: {
-      backgroundColor: "rgba(177, 16, 16, 1)",
-      width: "210vh",
-      height: "7vh",
+    header: {
+      width: "100%",
+      height: "15vh",
+      backgroundColor: "#ff0000",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      borderTop: "5px solid white",
     },
-    footerText: {
+    logo: {
+      width: "200px",
+      height: "auto",
+      border: "3px solid blue",
+    },
+    body: {
+      backgroundColor: "#D4D4D4",
+      width: "80%",
+      maxWidth: "500px",
+      padding: "30px",
+      borderRadius: "10px",
+      textAlign: "center",
+    },
+    title: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      marginBottom: "20px",
+    },
+    button: {
+      backgroundColor: "#ff0000",
       color: "white",
-      fontSize: 18,
+      width: "100%",
+      padding: "10px",
+      marginTop: "10px",
+      borderRadius: "5px",
+      fontSize: "16px",
+      fontWeight: "bold",
+      textTransform: "none",
+      "&:hover": {
+        backgroundColor: "#cc0000",
+      },
     },
   };
 }
