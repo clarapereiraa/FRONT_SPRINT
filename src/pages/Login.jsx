@@ -102,7 +102,7 @@ function getStyles() {
       width: "100%", // Ocupa toda a largura da tela
       height: "100vh", // Ocupa toda a altura da tela
       boxSizing: "border-box", // Garante que padding e borda sejam incluídos no tamanho total
-      padding:0
+      padding: 0,
     },
     form: {
       mt: 3,
@@ -158,7 +158,6 @@ function getStyles() {
     },
     textToCadastro: {
       fontSize: 15,
-      color: "#FF0000",
       fontWeight: "bold",
     },
     buttonCadastro: {

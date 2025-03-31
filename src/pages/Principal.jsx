@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
 import api from "../axios/axios";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,17 +14,17 @@ import TableRow from "@mui/material/TableRow";
 
 function Principal() {
   const styles = getStyles();
-  const [salas, setSalas] = useState([]);
+  const [sala, setSala] = useState([]);
   const navigate = useNavigate();
 
   async function getSalas() {
     await api.getSalas().then(
       (response) => {
         console.log(response.data.salas);
-        setSalas(response.data.salas);
+        setSala(response.data.salas);
       },
       (error) => {
-        console.log("Erro", error);
+        console.log("Erro", error.response.data);
       }
     );
   }
@@ -42,7 +41,7 @@ function Principal() {
     }
   }, [navigate]);
 
-  const listSalas = salas.map((sala) => (
+  const listSalas = sala.map((sala) => (
     <TableRow key={sala.id_sala}>
       <TableCell align="center" sx={styles.tableBodyCell}>
         {sala.classificacao}
@@ -58,10 +57,7 @@ function Principal() {
 
   return (
     <Container sx={styles.container}>
-      <Box sx={styles.header}>
-        <img src={logo} alt="Logo" style={styles.logo} />
-        <Button component={Link} to="/" sx={styles.buttonHome}> </Button>
-      </Box>
+       <Header />
       <Box sx={styles.boxFundoTabela}>
         <Container sx={styles.container}>{/* Conteúdo da página */}</Container>
 
@@ -92,7 +88,6 @@ function Principal() {
 function getStyles() {
   return {
     container: {
-      backgroundColor: "#FFDCDC",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -100,18 +95,10 @@ function getStyles() {
       minWidth: "100%",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
       flexDirection: "column",
     },
-    header: {
-      backgroundColor: "#D90000",
-      width: "230vh",
-      height: "11vh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "end",
-      borderBottom: "5px solid white",
-    },
+
     logo: {
       width: "230px",
       height: "auto",
@@ -126,49 +113,43 @@ function getStyles() {
       backgroundColor: "transparent",
     },
     table: {
-      backgroundColor: "#FF7B7B",
+      backgroundColor: "#D9D9D9",
       marginTop: 2.5,
       marginBottom: 2.5,
-      marginLeft: "auto", 
-      marginRight: "auto", 
-      width: "calc(100% - 40px)", 
-      borderRadius: "15px", 
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "calc(100% - 40px)",
+      borderRadius: "15px",
     },
     tableHead: {
-      backgroundColor: "#FF7B7B",
+      backgroundColor: "#FFFFFF",
       borderRadius: "50px",
-      border: "2px solid white",
     },
     boxFundoTabela: {
       border: "5px solid white",
       borderRadius: "15px",
-      backgroundColor: "#FFC2C2",
+      backgroundColor: "#D9D9D9",
       width: "90%",
     },
     tableCell: {
-      backgroundColor: "#D9D9D9",
+      backgroundColor: "#FF0000",
       border: "2px solid white",
       fontWeight: "bold",
       fontSize: 22,
       paddingTop: 2,
     },
     tableBody: {
-      backgroundColor: "#949494",
       border: "3px solid white",
       borderRadius: 10,
     },
     tableBodyCell: {
-      backgroundColor: "#FF7B7B",
+      backgroundColor: "#D9D9D9",
       border: "1px solid white",
       borderRadius: 10,
       color: "black",
       fontSize: 20,
       paddingTop: 1.2,
       paddingBottom: 1.2,
-    },
-    footerText: {
-      color: "white",
-      fontSize: 18,
     },
   };
 }
