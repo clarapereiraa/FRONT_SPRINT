@@ -47,7 +47,7 @@ function Principal() {
         {sala.classificacao}
       </TableCell>
       <TableCell align="center" sx={styles.tableBodyCell}>
-        {sala.horario_disponiveis}
+        {sala.horarios_disponiveis}
       </TableCell>
       <TableCell align="center" sx={styles.tableBodyCell}>
         {sala.bloco}
