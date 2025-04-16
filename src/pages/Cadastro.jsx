@@ -11,7 +11,7 @@ function Cadastro() {
   const styles = getStyles();
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
-    nomecompleto: "",
+    nome: "",
     email: "",
     cpf: "",
     senha: "",
@@ -53,9 +53,9 @@ function Cadastro() {
             fullWidth
             id="nome"
             placeholder="Nome"
-            name="nomecompleto"
+            name="nome"
             margin="normal"
-            value={usuario.nomecompleto}
+            value={usuario.nome}
             onChange={onChange}
             sx={styles.textField}
           />
