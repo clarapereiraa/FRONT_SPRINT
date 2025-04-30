@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+
 
 function Principal() {
   const navigate = useNavigate();
 
+  // Função chamada ao clicar em um bloco
   function handleBlocoClick(bloco) {
-    navigate(`/salas/${bloco}`);
+    navigate(`/bloco/${bloco}`); // Redireciona para a página do bloco clicado
   }
 
   return (
     <div>
-      <Header />
+
 
       <h1 style={{ textAlign: "center", margin: "20px 0" }}>Blocos</h1>
 
@@ -46,7 +46,7 @@ function Principal() {
         ))}
       </div>
 
-      <Footer />
+
     </div>
   );
 }

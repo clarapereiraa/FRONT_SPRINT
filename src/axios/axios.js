@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 const api = axios.create({
@@ -8,7 +9,12 @@ const api = axios.create({
 const sheets = {
   postLogin: (usuario) => api.post("userLogin/", usuario),
   postCadastro: (usuario) => api.post("user/", usuario),
-  getSalas: (sala) => api.get("sala/", sala),
+  getSalas: () => api.get("sala/"),
+  getBlocoA: () => api.get("blocoA"),
+  getBlocoB: () => api.get("blocoB"),
+  getBlocoC: () => api.get("blocoC"),
+  getBlocoD: () => api.get("blocoD"),
+
 };
 
 export default sheets;

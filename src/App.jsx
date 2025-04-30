@@ -3,8 +3,10 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Principal from "./pages/Principal";
 import Home from "./pages/Home";
-import Salas from "./pages/Salas";
+import ListSalas from "./pages/ListSalas";
+import BlocoPage from "./pages/BlocoPage"; // <-- Importa a nova página
 import ProtectedRouter from "./components/ProtectedRouter";
+import Disponibilidade from "./pages/Disponibilidade"
 
 function App() {
   return (
@@ -22,10 +24,26 @@ function App() {
           }
         />
         <Route
-          path="/salas/:bloco"
+          path="/sala"
           element={
             <ProtectedRouter>
-              <Salas />
+              <ListSalas />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/bloco/:bloco"
+          element={
+            <ProtectedRouter>
+              <BlocoPage />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/disponibilidade/:id"
+          element={
+            <ProtectedRouter>
+              <Disponibilidade />
             </ProtectedRouter>
           }
         />
