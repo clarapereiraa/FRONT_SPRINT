@@ -40,7 +40,7 @@ function App() {
           }
         />
         <Route
-          path="/disponibilidade/:id"
+          path="/bloco/:bloco/disponibilidade/:id"
           element={
             <ProtectedRouter>
               <Disponibilidade />

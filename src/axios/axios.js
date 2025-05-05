@@ -14,6 +14,7 @@ const sheets = {
   getBlocoB: () => api.get("blocoB"),
   getBlocoC: () => api.get("blocoC"),
   getBlocoD: () => api.get("blocoD"),
+  getReservaIdData:(dados) => api.post("reservaIdData/", dados),
 
 };
 
