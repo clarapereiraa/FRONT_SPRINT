@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ModalReserva from "../components/ModalReserva";
 
 import api from "../axios/axios";
 
@@ -11,24 +12,21 @@ function Disponibilidade() {
   const [carregando, setCarregando] = useState(false); // Status de carregamento
   const [erro, setErro] = useState(""); // Mensagem de erro
 
-  const dados = {fk_id_sala: id, datahora_inicio: data};
+  const [modalAberto, setModalAberto] = useState(false);
+  const [reservaSelecionada, setReservaSelecionada] = useState(null);
+
+  const dados = { fk_id_sala: id, datahora_inicio: data };
 
   // Função que vai buscar as reservas já feitas para a sala e data
   const buscarReservas = async () => {
     setCarregando(true);
     setErro("");
 
-    try {    
-
+    try {
       const response = await api.getReservaIdData(dados);
-
-      console.log("---Reservas------- : ", response.data.reservas)
-
       setReservas(response.data.reservas); // Reservas já feitas
     } catch (err) {
-      // console.log("------Erro-------: ", err);
       setErro("Erro ao buscar reservas. Tente novamente mais tarde.");
-      
     } finally {
       setCarregando(false);
     }
@@ -40,7 +38,6 @@ function Disponibilidade() {
     const inicioDia = new Date(`${data}T07:00:00`);
     const fimDia = new Date(`${data}T17:00:00`);
 
-    // Gera todos os horários de 1h
     let horarioAtual = new Date(inicioDia);
     while (horarioAtual < fimDia) {
       const horarioFim = new Date(horarioAtual);
@@ -59,13 +56,11 @@ function Disponibilidade() {
     return horariosGerados;
   };
 
-  // Filtra os horários disponíveis com base nas reservas
   const filtrarHorariosDisponiveis = () => {
     if (!reservas || !data) return [];
 
     const horariosGerados = gerarHorariosDisponiveis();
 
-    // Exclui horários reservados
     return horariosGerados.filter((horario) => {
       return !reservas.some((reserva) => {
         const inicioReserva = new Date(reserva.datahora_inicio);
@@ -81,19 +76,60 @@ function Disponibilidade() {
     });
   };
 
-  // Carrega os horários e as reservas ao mudar a data
   useEffect(() => {
     if (data) {
       buscarReservas();
     }
   }, [data]);
 
-  // Chama a função para gerar os horários filtrados
   const horariosDisponiveis = filtrarHorariosDisponiveis();
 
   const handleReservar = (horario) => {
-    alert(`Reservar horário ${horario.inicio} - ${horario.fim}`);
-    // Aqui você pode adicionar a lógica para chamar a API e fazer a reserva
+    const dataFormatada = new Date(horario.inicioCompleto).toLocaleDateString();
+    const horaFormatada = new Date(horario.inicioCompleto).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    setReservaSelecionada({
+      bloco: "X", // Substituir com dado real, se houver
+      sala: `Sala ${id}`,
+      data: dataFormatada,
+      horario: horaFormatada,
+      ...horario,
+    });
+
+    setModalAberto(true);
+  };
+
+  const confirmarReserva = async () => {
+    if (!reservaSelecionada) return;
+
+    setModalAberto(false);
+
+    const fk_id_usuario = localStorage.getItem("id_usuario");
+
+    if (!fk_id_usuario) {
+      alert("Usuário não autenticado.");
+      return;
+    }
+
+    const reserva = {
+      fk_id_usuario,
+      fk_id_sala: id,
+      datahora_inicio: reservaSelecionada.inicioCompleto,
+      datahora_fim: reservaSelecionada.fimCompleto,
+    };
+
+    try {
+      await api.post("/reserva", reserva);
+      alert("Reserva feita com sucesso!");
+      buscarReservas();
+    } catch (error) {
+      console.error("Erro ao fazer reserva:", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        alert("Erro: " + error.response.data.error);
+      } else {
+        alert("Erro ao fazer reserva. Tente novamente.");
+      }
+    }
   };
 
   return (
@@ -145,7 +181,7 @@ function Disponibilidade() {
                     borderRadius: "4px",
                     cursor: "pointer",
                   }}
-                  onClick={() => handleReservar(horario)} // Lógica de reserva
+                  onClick={() => handleReservar(horario)}
                 >
                   Reservar
                 </button>
@@ -154,6 +190,13 @@ function Disponibilidade() {
           </ul>
         </div>
       )}
+
+      <ModalReserva
+        isOpen={modalAberto}
+        onClose={() => setModalAberto(false)}
+        onConfirm={confirmarReserva}
+        reserva={reservaSelecionada || {}}
+      />
     </div>
   );
 }

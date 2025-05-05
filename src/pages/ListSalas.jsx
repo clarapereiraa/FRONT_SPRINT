@@ -10,7 +10,7 @@ import { Button, IconButton, Alert, Snackbar } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import api from "../axios/axios";  // Certifique-se de que esse caminho esteja correto
 import { useNavigate } from "react-router-dom";
-import ModalCriarReserva from "../components/ModalCriarReserva";
+
 
 function ListSalas() {
     const [sala, setSalas] = useState([]);
