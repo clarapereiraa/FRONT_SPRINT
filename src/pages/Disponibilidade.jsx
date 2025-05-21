@@ -7,7 +7,6 @@ import api from "../axios/axios";
 function Disponibilidade() {
   const { id } = useParams(); // ID da sala da URL
   const [data, setData] = useState(""); // Data escolhida pelo usuário
-  const [horarios, setHorarios] = useState([]); // Horários disponíveis
   const [reservas, setReservas] = useState([]); // Reservas já feitas para a sala
   const [carregando, setCarregando] = useState(false); // Status de carregamento
   const [erro, setErro] = useState(""); // Mensagem de erro
@@ -119,11 +118,11 @@ function Disponibilidade() {
     };
 
     try {
-      await api.post("/reserva", reserva);
-      alert("Reserva feita com sucesso!");
+      const response = await api.postReserva(reserva);
+      alert(response.data.message);
       buscarReservas();
     } catch (error) {
-      console.error("Erro ao fazer reserva:", error);
+      console.log("Erro ao fazer reserva:", error.response.data.error);
       if (error.response && error.response.data && error.response.data.error) {
         alert("Erro: " + error.response.data.error);
       } else {

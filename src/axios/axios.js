@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://10.89.240.99:5000/api/v1/",
+  baseURL: "http://10.89.240.66:5000/api/v1/",
   headers: { accept: "application/json" },
 });
 
@@ -15,7 +15,7 @@ const sheets = {
   getBlocoC: () => api.get("blocoC"),
   getBlocoD: () => api.get("blocoD"),
   getReservaIdData:(dados) => api.post("reservaIdData/", dados),
-
+  postReserva: (dados) => api.post("/reserva", dados),
 };
 
 export default sheets;
