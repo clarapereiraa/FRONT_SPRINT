@@ -8,6 +8,7 @@ import BlocoPage from "./pages/BlocoPage"; // <-- Importa a nova página
 import ProtectedRouter from "./components/ProtectedRouter";
 import Disponibilidade from "./pages/Disponibilidade";
 import Perfil from "./pages/Perfil";
+import MinhasReservas from "./pages/MinhasReservas";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           }
         />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/minhasreservas" element={<MinhasReservas />} />
       </Routes>
     </Router>
   );

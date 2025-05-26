@@ -1,21 +1,22 @@
 import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 const Perfil = () => {
+  const navigate = useNavigate();
+
   let nome = "";
   let email = "";
   let cpf = "";
-  let senha = "";
 
   try {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const user = JSON.parse(user);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
       nome = user.nome;
       email = user.email;
       cpf = user.cpf;
-      senha = user.senha;
     }
   } catch (error) {
     console.error("Erro ao ler dados do usuário:", error);
@@ -30,9 +31,7 @@ const Perfil = () => {
       <Header />
 
       <main style={{ padding: "40px 20px", textAlign: "center" }}>
-        <h1
-          style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "30px" }}
-        >
+        <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "30px" }}>
           Meu perfil
         </h1>
         <div
@@ -45,22 +44,9 @@ const Perfil = () => {
             lineHeight: "2",
           }}
         >
-          <div>
-            Nome:{" "}
-            <span style={{ fontWeight: "normal", color: "#444" }}>{nome}</span>
-          </div>
-          <div>
-            Email:{" "}
-            <span style={{ fontWeight: "normal", color: "#444" }}>{email}</span>
-          </div>
-          <div>
-            CPF:{" "}
-            <span style={{ fontWeight: "normal", color: "#444" }}>{cpf}</span>
-          </div>
-          <div>
-            Senha:{" "}
-            <span style={{ fontWeight: "normal", color: "#444" }}>{senha}</span>
-          </div>
+          <div>Nome: <span style={{ fontWeight: "normal", color: "#444" }}>{nome}</span></div>
+          <div>Email: <span style={{ fontWeight: "normal", color: "#444" }}>{email}</span></div>
+          <div>CPF: <span style={{ fontWeight: "normal", color: "#444" }}>{cpf}</span></div>
         </div>
       </main>
 
@@ -84,7 +70,7 @@ const Perfil = () => {
             borderRadius: "6px",
             cursor: "pointer",
             display: "inline-block",
-            marginBottom: "97px",
+            marginBottom: "150px",
           }}
         >
           Minhas Reservas
@@ -95,4 +81,5 @@ const Perfil = () => {
     </>
   );
 };
+
 export default Perfil;

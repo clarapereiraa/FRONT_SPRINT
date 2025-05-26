@@ -16,6 +16,7 @@ const sheets = {
   getBlocoD: () => api.get("blocoD"),
   getReservaIdData:(dados) => api.post("reservaIdData/", dados),
   postReserva: (dados) => api.post("/reserva", dados),
+  getReservaByUsuario: (id_usuario) => api.get(`reserva/usuario/${id_usuario}`),
 };
 
 export default sheets;
