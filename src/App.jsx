@@ -6,7 +6,8 @@ import Home from "./pages/Home";
 import ListSalas from "./pages/ListSalas";
 import BlocoPage from "./pages/BlocoPage"; // <-- Importa a nova página
 import ProtectedRouter from "./components/ProtectedRouter";
-import Disponibilidade from "./pages/Disponibilidade"
+import Disponibilidade from "./pages/Disponibilidade";
+import Perfil from "./pages/Perfil";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             </ProtectedRouter>
           }
         />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </Router>
   );

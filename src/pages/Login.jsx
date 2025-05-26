@@ -8,7 +8,7 @@ import Header from "../components/Header";
 
 function Login() {
   const styles = getStyles();
-  const [usuario, setUsuario] = useState({ email: "", senha: "" });
+  const [usuario, setUsuario] = useState({ email: "", senha: "", nome:"", cpf: "" });
   const navigate = useNavigate();
 
   const onChange = (event) => {
@@ -25,6 +25,7 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("id_usuario",response.data.user.id_usuario)
       navigate("/principal");
+      localStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       console.log(error);
       alert(error.response?.data?.error || "Erro ao fazer login");

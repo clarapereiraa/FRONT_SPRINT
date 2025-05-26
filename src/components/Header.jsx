@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 
+
 const Header = () => {
   const isAuthenticated = localStorage.getItem("authenticated")
   return (
@@ -15,10 +16,9 @@ const Header = () => {
       </Button>:<div></div>}
   
       <div style={iconContainerStyle}>
-        <Button component={Link} to="/" sx={iconButtonStyle}>
-          <HomeIcon sx={iconStyle} />
-        </Button>
-        <PersonIcon sx={iconStyle} /> {/* Person sem navegação */}
+      <Button component={Link} to="/perfil" sx={iconButtonStyle}>
+        <PersonIcon sx={iconStyle} />
+      </Button>
       </div>
     </header>
   );
