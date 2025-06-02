@@ -10,15 +10,16 @@ import ModalEditar from "../components/ModalEditar";
 const MinhasReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [modalAberto, setModalAberto] = useState(false);
   const [reservaSelecionada, setReservaSelecionada] = useState(null);
+  const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
+  const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const abrirModalExcluir = (reserva) => {
     setReservaSelecionada(reserva);
-    setModalAberto(true);
+    setModalExcluirAberto(true);
   };
   const abrirModalEditar = (reserva) => {
     setReservaSelecionada(reserva);
-    setModalAberto(true);
+    setModalEditarAberto(true);
   };
 
   // Função para excluir uma reserva
@@ -34,7 +35,7 @@ const MinhasReservas = () => {
       console.error("Erro ao excluir reserva:", error);
       alert("Erro ao excluir reserva.");
     } finally {
-      setModalAberto(false);
+      setModalExcluirAberto(false);
       setReservaSelecionada(null);
     }
   };
@@ -42,26 +43,25 @@ const MinhasReservas = () => {
   const updateReserva = async (id, datahora_inicio, datahora_fim) => {
     try {
       const response = await fetch(`/api/reservas/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ datahora_inicio, datahora_fim }),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
-        throw new Error(data.error || 'Erro ao atualizar reserva');
+        throw new Error(data.error || "Erro ao atualizar reserva");
       }
-  
+
       return data; // Retorna os dados atualizados
     } catch (error) {
-      console.error('Erro na atualização da reserva:', error.message);
+      console.error("Erro na atualização da reserva:", error.message);
       throw error; // Propaga o erro para tratamento posterior
     }
   };
-  
 
   useEffect(() => {
     const fetchReservas = async () => {
@@ -121,7 +121,7 @@ const MinhasReservas = () => {
                 }}
               >
                 <p>
-                  <strong>Sala:</strong> {reserva.classificação}
+                  <strong>Sala: </strong>
                 </p>
                 <p>
                   <strong>Data Início:</strong>{" "}
@@ -139,7 +139,7 @@ const MinhasReservas = () => {
                     top: "10px", // Distância do topo
                     right: "10px", // Distância da direita
                     cursor: "pointer", // Adiciona cursor pointer para interatividade
-                    color: "red", // Cor vermelha para indicar exclusão
+                    color: "red", // Cor vermelha
                   }}
                   onClick={() => abrirModalExcluir(reserva)}
                 />
@@ -161,23 +161,23 @@ const MinhasReservas = () => {
       </main>
 
       <ModalExcluir
-        isOpen={modalAberto}
-        onClose={() => setModalAberto(false)}
+        isOpen={modalExcluirAberto}
+        onClose={() => setModalExcluirAberto(false)}
         onConfirm={deleteReserva}
         reserva={reservaSelecionada}
       />
 
       <ModalEditar
-        isOpen={modalAberto}
-        onClose={() => setModalAberto(false)}
-        onConfirm={updateReserva => {
-          // Lógica para salvar os dados atualizados
-          console.log(dadosAtualizados);
-          setModalAberto(false);
+        isOpen={modalEditarAberto}
+        onClose={() => setModalEditarAberto(false)}
+        onConfirm={(resultado) => {
+          console.log("Reserva atualizada:", resultado);
+          setModalEditarAberto(false);
+          // Atualize seu estado ou faça outras ações aqui
         }}
         reserva={reservaSelecionada}
+        updateReserva={updateReserva} // <-- Passa a função como prop
       />
-
       <Footer />
     </>
   );

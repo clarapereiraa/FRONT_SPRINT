@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 
 const ModalEditar= ({ isOpen, onClose, onConfirm, reserva }) => {
   const [formData, setFormData] = useState({
-    bloco: "",
-    sala: "",
     datahora_inicio: "",
+    datahora_fim: "",
   });
+
+  
 
   useEffect(() => {
     if (reserva) {
       setFormData({
-        bloco: reserva.bloco || "",
-        sala: reserva.sala || "",
         datahora_inicio: reserva.datahora_inicio || "",
+        datahora_fim: reserva.datahora_fim || "",
       });
     }
   }, [reserva]);
@@ -47,32 +47,22 @@ const ModalEditar= ({ isOpen, onClose, onConfirm, reserva }) => {
       <div style={modal}>
         <h3 style={titulo}>Editar Reserva</h3>
         <div style={formGroup}>
-          <label style={label}>Bloco:</label>
-          <input
-            style={input}
-            type="text"
-            name="bloco"
-            value={formData.bloco}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={formGroup}>
-          <label style={label}>Sala:</label>
-          <input
-            style={input}
-            type="text"
-            name="sala"
-            value={formData.sala}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={formGroup}>
-          <label style={label}>Dia e Horário:</label>
+          <label style={label}>Dia e Horário Inicio:</label>
           <input
             style={input}
             type="datetime-local"
             name="datahora_inicio"
             value={formData.datahora_inicio}
+            onChange={handleChange}
+          />
+        </div>
+        <div style={formGroup}>
+          <label style={label}>Dia e Horário Fim:</label>
+          <input
+            style={input}
+            type="datetime-local"
+            name="datahora_fim"
+            value={formData.datahora_fim}
             onChange={handleChange}
           />
         </div>
