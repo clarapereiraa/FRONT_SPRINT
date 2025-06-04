@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
-
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const isAuthenticated = localStorage.getItem("authenticated")
+  const isAuthenticated = localStorage.getItem("authenticated");
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    // Volta para a página anterior, se possível
+    navigate(-1);
+  };
   return (
     <header style={headerStyle}>
-      {isAuthenticated?<Button component={Link} to="/Login" sx={iconButtonStyle}>
-        <ArrowBackIcon sx={iconStyle} /> {/* Seta para voltar */}
+      {isAuthenticated?<Button onClick={handleGoBack} sx={iconButtonStyle}>
+        <ArrowBackIcon sx={iconStyle} /> 
       </Button>:<div></div>}
   
       <div style={iconContainerStyle}>

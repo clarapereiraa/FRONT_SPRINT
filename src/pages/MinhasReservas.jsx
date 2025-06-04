@@ -4,22 +4,15 @@ import Footer from "../components/Footer";
 import api from "../axios/axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModalExcluir from "../components/ModalExcluir";
-import EditIcon from "@mui/icons-material/Edit";
-import ModalEditar from "../components/ModalEditar";
 
 const MinhasReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reservaSelecionada, setReservaSelecionada] = useState(null);
   const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
-  const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const abrirModalExcluir = (reserva) => {
     setReservaSelecionada(reserva);
     setModalExcluirAberto(true);
-  };
-  const abrirModalEditar = (reserva) => {
-    setReservaSelecionada(reserva);
-    setModalEditarAberto(true);
   };
 
   // Função para excluir uma reserva
@@ -28,9 +21,7 @@ const MinhasReservas = () => {
 
     try {
       await api.deleteReserva(reservaSelecionada.id_reserva);
-      setReservas(
-        reservas.filter((r) => r.id_reserva !== reservaSelecionada.id_reserva)
-      );
+      fetchReservas();
     } catch (error) {
       console.error("Erro ao excluir reserva:", error);
       alert("Erro ao excluir reserva.");
@@ -40,47 +31,25 @@ const MinhasReservas = () => {
     }
   };
 
-  const updateReserva = async (id, datahora_inicio, datahora_fim) => {
+  
+  const fetchReservas = async () => {
     try {
-      const response = await fetch(`/api/reservas/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ datahora_inicio, datahora_fim }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Erro ao atualizar reserva");
+      const id_usuario = localStorage.getItem("id_usuario");
+      if (!id_usuario) {
+        throw new Error("Usuário não autenticado");
       }
 
-      return data; // Retorna os dados atualizados
+      const response = await api.getReservaByUsuario(id_usuario);
+      console.log(response.data.reservas)
+      setReservas(response.data.reservas); // Ajuste para acessar a propriedade 'reservas' na resposta
     } catch (error) {
-      console.error("Erro na atualização da reserva:", error.message);
-      throw error; // Propaga o erro para tratamento posterior
+      console.error("Erro ao buscar reservas:", error);
+      setReservas([]); // Limpa o estado em caso de erro
+    } finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
-    const fetchReservas = async () => {
-      try {
-        const id_usuario = localStorage.getItem("id_usuario");
-        if (!id_usuario) {
-          throw new Error("Usuário não autenticado");
-        }
-
-        const response = await api.getReservaByUsuario(id_usuario);
-        setReservas(response.data.reservas); // Ajuste para acessar a propriedade 'reservas' na resposta
-      } catch (error) {
-        console.error("Erro ao buscar reservas:", error);
-        setReservas([]); // Limpa o estado em caso de erro
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchReservas();
   }, []);
 
@@ -121,7 +90,10 @@ const MinhasReservas = () => {
                 }}
               >
                 <p>
-                  <strong>Sala: </strong>
+                  <strong>Sala:{reserva.classificacao} </strong>
+                </p>
+                <p>
+                  <strong>Bloco:{reserva.bloco} </strong>
                 </p>
                 <p>
                   <strong>Data Início:</strong>{" "}
@@ -144,16 +116,6 @@ const MinhasReservas = () => {
                   onClick={() => abrirModalExcluir(reserva)}
                 />
 
-                <EditIcon
-                  style={{
-                    position: "absolute",
-                    top: "10px",
-                    right: "50px", // espaço antes do ícone de deletar
-                    cursor: "pointer",
-                    color: "red",
-                  }}
-                  onClick={() => abrirModalEditar(reserva)}
-                />
               </div>
             ))}
           </div>
@@ -167,17 +129,6 @@ const MinhasReservas = () => {
         reserva={reservaSelecionada}
       />
 
-      <ModalEditar
-        isOpen={modalEditarAberto}
-        onClose={() => setModalEditarAberto(false)}
-        onConfirm={(resultado) => {
-          console.log("Reserva atualizada:", resultado);
-          setModalEditarAberto(false);
-          // Atualize seu estado ou faça outras ações aqui
-        }}
-        reserva={reservaSelecionada}
-        updateReserva={updateReserva} // <-- Passa a função como prop
-      />
       <Footer />
     </>
   );

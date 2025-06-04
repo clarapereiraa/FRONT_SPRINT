@@ -10,7 +10,7 @@ const Footer = () => {
 };
 
 const footerStyle = {
-  position: "relative", // Garante que não sobreponha o conteúdo
+  position: "fixed", 
   bottom: 0,
   backgroundColor: "#FF0000",
   width: "100%",

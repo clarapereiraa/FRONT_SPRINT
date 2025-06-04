@@ -5,7 +5,7 @@ import ModalReserva from "../components/ModalReserva";
 import api from "../axios/axios";
 
 function Disponibilidade() {
-  const { id } = useParams(); // ID da sala da URL
+  const { id, bloco } = useParams(); // ID da sala da URL
   const [data, setData] = useState(""); // Data escolhida pelo usuário
   const [reservas, setReservas] = useState([]); // Reservas já feitas para a sala
   const [carregando, setCarregando] = useState(false); // Status de carregamento
@@ -88,7 +88,7 @@ function Disponibilidade() {
     const horaFormatada = new Date(horario.inicioCompleto).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     setReservaSelecionada({
-      bloco: "X", // Substituir com dado real, se houver
+      bloco: bloco, // Substituir com dado real, se houver
       sala: `Sala ${id}`,
       data: dataFormatada,
       horario: horaFormatada,
@@ -119,7 +119,6 @@ function Disponibilidade() {
 
     try {
       const response = await api.postReserva(reserva);
-      alert(response.data.message);
       buscarReservas();
     } catch (error) {
       console.log("Erro ao fazer reserva:", error.response.data.error);

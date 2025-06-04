@@ -31,7 +31,7 @@ const Perfil = () => {
       <Header />
 
       <main style={{ padding: "40px 20px", textAlign: "center" }}>
-        <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "30px" }}>
+        <h1 style={{ fontSize: "32px", fontWeight: "900", marginBottom: "40px", textAlign: "center" }}>
           Meu perfil
         </h1>
         <div

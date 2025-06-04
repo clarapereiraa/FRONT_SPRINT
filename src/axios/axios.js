@@ -1,9 +1,16 @@
-
 import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://10.89.240.66:5000/api/v1/",
   headers: { accept: "application/json" },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 const sheets = {
@@ -18,7 +25,6 @@ const sheets = {
   postReserva: (dados) => api.post("/reserva", dados),
   getReservaByUsuario: (id) => api.get(`reserva/${id}`),
   deleteReserva: (id) => api.delete(`reserva/${id}`),
-  updateReserva: (id) => api.update(`/reserva/${id}`),
 };
 
 export default sheets;
