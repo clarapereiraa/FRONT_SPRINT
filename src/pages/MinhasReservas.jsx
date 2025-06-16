@@ -55,7 +55,7 @@ const MinhasReservas = () => {
 
   return (
     <>
-      <Header />
+    
       <main style={{ padding: "40px 20px", textAlign: "center" }}>
         <h1
           style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "30px" }}
@@ -86,7 +86,7 @@ const MinhasReservas = () => {
                   marginBottom: "20px",
                   width: "80%",
                   textAlign: "left",
-                  position: "relative", // Necessário para posicionar o ícone de delete
+                  position: "relative", 
                 }}
               >
                 <p>

@@ -8,7 +8,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = ` ${token}`;
   }
   return config;
 });
@@ -25,6 +25,8 @@ const sheets = {
   postReserva: (dados) => api.post("/reserva", dados),
   getReservaByUsuario: (id) => api.get(`reserva/${id}`),
   deleteReserva: (id) => api.delete(`reserva/${id}`),
+  updateUser: (id) => api.put(`user/${id}`, dados),
+  deleteUser: (id) => api.delete(`user/${id}`),
 };
 
 export default sheets;

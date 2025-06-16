@@ -49,8 +49,22 @@ function App() {
             </ProtectedRouter>
           }
         />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/minhasreservas" element={<MinhasReservas />} />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRouter>
+              <Perfil />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/minhasreservas"
+          element={
+            <ProtectedRouter>
+              <MinhasReservas />
+            </ProtectedRouter>
+          }
+        />
       </Routes>
     </Router>
   );
