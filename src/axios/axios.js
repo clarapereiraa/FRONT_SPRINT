@@ -25,7 +25,7 @@ const sheets = {
   postReserva: (dados) => api.post("/reserva", dados),
   getReservaByUsuario: (id) => api.get(`reserva/${id}`),
   deleteReserva: (id) => api.delete(`reserva/${id}`),
-  updateUser: (id) => api.put(`user/${id}`, dados),
+  updateUser: (id, dados) => api.put(`user/${id}`, dados),
   deleteUser: (id) => api.delete(`user/${id}`),
 };
 
